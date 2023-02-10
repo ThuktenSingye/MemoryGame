@@ -5,12 +5,12 @@ import { useEffect, useState } from 'react';
 import SingleCard from './component/SingleCard';
 // make an array of card cause the card are constant that will never chaneg
 const cardImages = [
-  {"src":"/img/helmet-1.png"},
-  {"src":"/img/potion-1.png"},
-  {"src":"/img/ring-1.png"},
-  {"src":"/img/scroll-1.png"},
-  {"src":"/img/shield-1.png"},
-  {"src":"/img/sword-1.png"}
+  {"src":"/img/helmet-1.png", matched: false},
+  {"src":"/img/potion-1.png",matched: false},
+  {"src":"/img/ring-1.png",matched: false},
+  {"src":"/img/scroll-1.png",matched: false},
+  {"src":"/img/shield-1.png",matched: false},
+  {"src":"/img/sword-1.png",matched: false}
 ]
 function App() {
   const [cards, setCards] = useState([]) // used to store card state
@@ -37,7 +37,15 @@ function App() {
     if (choiceOne && choiceTwo){ // true when both have an value
       // now compare using src property
       if (choiceOne.src === choiceTwo.src){
-        console.log("The selected item match ")
+        setCards(prevCards=>{
+          return prevCards.map(card=>{
+            if (card.src === choiceOne.src){
+              return {...card, matched : true}
+            }else{
+              return card
+            }
+          })
+        })
         resetTurn()
       }
       else{
@@ -47,6 +55,7 @@ function App() {
 
     }
   },[choiceOne, choiceTwo])
+  console.log(cards)
   // console.log(cards, turns)
   // reset the choice and increase the turn
   const resetTurn = () =>{
