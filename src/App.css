@@ -17,3 +17,10 @@
   color: #fff;
 }
 /* to remove all the file from git staging area, we used gut rm --cached -r command */
+.card-grid{
+  box-sizing: border-box;
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 10px 10px;
+}

@@ -2,6 +2,7 @@
 import './App.css';
 import Button from '@material-ui/core/Button';
 import { useState } from 'react';
+import SingleCard from './component/SingleCard';
 // make an array of card cause the card are constant that will never chaneg
 const cardImages = [
   {"src":"/img/helmet-1.png"},
@@ -24,15 +25,19 @@ function App() {
     setCards(shuffleCard)
     setTurns(0)
 
-    
   }
-  console.log(cards, turns)
- 
+  // console.log(cards, turns)
   
   return (
     <div className="app">
      <h1>Magic Match</h1>
      <Button onClick={shuffleCards}>New Game</Button>
+     <div className='card-grid'>
+      {cards.map((card)=>(
+          <SingleCard key={card.id} card ={card}/>
+        ))}
+     
+     </div>
     </div>
   );
 }
