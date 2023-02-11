@@ -17,13 +17,16 @@ function App() {
   const [turns, setTurns] = useState(0)
   const [choiceOne, setChoiceOne] = useState(null)
   const [choiceTwo, setChoiceTwo] = useState(null)
+  const [disabled, setDisabled] = useState(false)
   // shuffle card using sort methjod 
   const shuffleCards = ()=>{
     const shuffleCard = [...cardImages, ...cardImages]
     // if value is greater than 0 its swap else it remain unchanged
       .sort(()=> Math.random() - 0.5)
       .map((card)=> ({...card, id: Math.random()}))
-
+    setChoiceOne(null)
+    setChoiceTwo(null)
+    setDisabled(false)
     setCards(shuffleCard)
     setTurns(0)
 
@@ -34,7 +37,9 @@ function App() {
   }
   // now how to compare two selected item 
   useEffect(()=>{
+    
     if (choiceOne && choiceTwo){ // true when both have an value
+      setDisabled(true)
       // now compare using src property
       if (choiceOne.src === choiceTwo.src){
         setCards(prevCards=>{
@@ -54,13 +59,16 @@ function App() {
 
     }
   },[choiceOne, choiceTwo])
-  console.log(cards)
-  // console.log(cards, turns)
+ // start a new game automatically
+ useEffect(()=>{
+  shuffleCards()
+ },[])
   // reset the choice and increase the turn
   const resetTurn = () =>{
     setChoiceOne(null)
     setChoiceTwo(null)
     setTurns (prevTurn => prevTurn+1)
+    setDisabled(false)
   }
   
   return (
@@ -74,9 +82,11 @@ function App() {
             card ={card} 
             handleChoice ={handleChoice}
             flipped = {card === choiceOne|| card === choiceTwo || card.matched}  
+            disabled = {disabled}
           />
         ))}
      </div>
+     <p>Turns:{turns}</p>
     </div>
   );
 }
